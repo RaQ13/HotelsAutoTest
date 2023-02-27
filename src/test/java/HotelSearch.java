@@ -5,7 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HotelSearch {
 
@@ -37,5 +39,20 @@ public class HotelSearch {
                 .filter(el -> el.isDisplayed())//filtrowanie między elementami zwaracoące element wyświetlony
                 .findFirst()//znajduje pierwszy
                 .ifPresent(el -> el.click());//jeżeli dostępny click()
+
+        /** Część trzecia zmiana lokatorów */
+
+        driver.findElement(By.id("travellersInput")).click();
+        driver.findElement(By.id("adultPlusBtn")).click();
+        driver.findElement(By.id("childPlusBtn")).click();
+
+        /** Część czwarta wyniki */
+
+        driver.findElement(By.xpath("//button[text()=' Search']")).click();
+        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b"))
+                .stream()
+                .map(el -> el.getText())
+                .collect(Collectors.toList());
+        System.out.println(hotelNames.size());
     }
 }
