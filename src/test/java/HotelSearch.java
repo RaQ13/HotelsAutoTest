@@ -24,9 +24,18 @@ public class HotelSearch {
 
         /** Część druga wybór daty */
 
-        //wpisanei w input daty
+        //wpisanie w input daty
         driver.findElement(By.name("checkin")).sendKeys("17/04/2021");
-        driver.findElement(By.name("checkout")).sendKeys("20/04/2021");
+//        driver.findElement(By.name("checkout")).sendKeys("20/04/2021");
 
+        //przez klik w kalendarzu
+        driver.findElement(By.name("checkout")).click();
+        //find elements dla znalezienia wielu elementów i możliwości filtrowania wyników
+        //jest wiele elementów td o wartosci 28, trzeba przefiltrować do elementu, który się wyświetla
+        driver.findElements(By.xpath("//td[@class='day ' and text()='28']"))
+                .stream() //strumień z elementami
+                .filter(el -> el.isDisplayed())//filtrowanie między elementami zwaracoące element wyświetlony
+                .findFirst()//znajduje pierwszy
+                .ifPresent(el -> el.click());//jeżeli dostępny click()
     }
 }
