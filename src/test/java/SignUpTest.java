@@ -16,6 +16,7 @@ public class SignUpTest {
 
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");
 
         /** Działania na wielu elementach html */
@@ -31,10 +32,12 @@ public class SignUpTest {
         /** Wprowadzanie danych do formularza */
 
         String lastName = "Barbarzyńca";
+        int randomnumber = (int) (Math.random()*1000);
+        String email= "ptrknorder" + randomnumber + "@gmail.com";
         driver.findElement(By.name("firstname")).sendKeys("Genowef");
         driver.findElement(By.name("lastname")).sendKeys(lastName);
         driver.findElement(By.name("phone")).sendKeys("666666666");
-        driver.findElement(By.name("email")).sendKeys("ptrknorder@gmail.com");
+        driver.findElement(By.name("email")).sendKeys(email);
         driver.findElement(By.name("password")).sendKeys("Test123");
         driver.findElement(By.name("confirmpassword")).sendKeys("Test123");
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Sign Up']")).click();
