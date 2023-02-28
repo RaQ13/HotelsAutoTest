@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -36,10 +37,12 @@ public class HotelSearch {
         //jest wiele elementów td o wartosci 28, trzeba przefiltrować do elementu, który się wyświetla
         driver.findElements(By.xpath("//td[@class='day ' and text()='28']"))
                 .stream() //strumień z elementami
-                .filter(el -> el.isDisplayed())//filtrowanie między elementami zwaracoące element wyświetlony
+                //el.isDisplayed() podświetla sie na szaro i moze zostać zamienione an method reference
+//                .filter(el -> el.isDisplayed())//filtrowanie między elementami zwaracoące element wyświetlony
+                .filter(WebElement::isDisplayed)//method reference zamiast wyrażenia lambda
                 .findFirst()//znajduje pierwszy
-                .ifPresent(el -> el.click());//jeżeli dostępny click()
-
+//                .ifPresent(el -> el.click());//jeżeli dostępny click()
+                .ifPresent(WebElement::click);
         /** Część trzecia zmiana lokatorów */
 
         driver.findElement(By.id("travellersInput")).click();
@@ -51,8 +54,19 @@ public class HotelSearch {
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
         List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b"))
                 .stream()
-                .map(el -> el.getText())
+//                .map(el -> el.getText())
+                .map(el -> el.getAttribute("textContent")) //zmiana sposobu pobierania tekstu bo nie wyświetlaja się wszystkie
                 .collect(Collectors.toList());
         System.out.println(hotelNames.size());
+
+//        hotelNames.forEach(el -> System.out.println(el));
+        //method reference, dla każdego elementu który znajduje sie w hotelnames ma byc wywołany println
+        //automatycznie każdy element jest przekazywany jako argument do println
+        hotelNames.forEach(System.out::println);
+
+        Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
+        Assert.assertEquals(hotelNames.get(1),"Oasis Beach Tower");
+        Assert.assertEquals(hotelNames.get(2), "Rose Rayhaan Rotana");
+        Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
     }
 }
