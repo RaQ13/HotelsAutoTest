@@ -68,7 +68,6 @@ public class ZadanieEmptyForm {
         softAssert.assertTrue(errors.contains("The First name field is required."));
         softAssert.assertTrue(errors.contains("The Last Name field is required."));
         softAssert.assertAll();
-
     }
     @Test
     public void tryInvalidEmail() throws InterruptedException {
@@ -103,5 +102,6 @@ public class ZadanieEmptyForm {
         softAssert.assertTrue(errors2.contains("The Email field must contain a valid email address."));
         softAssert.assertTrue(errors2.contains("The Password field must be at least 6 characters in length."));
         softAssert.assertAll();
+        driver.quit();
     }
 }

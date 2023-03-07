@@ -44,5 +44,6 @@ public class ZadanieSearch {
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
         WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
         Assert.assertEquals(heading.getText(), "No Results Found");
+        driver.quit();
     }
 }

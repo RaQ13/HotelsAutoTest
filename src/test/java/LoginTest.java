@@ -36,6 +36,7 @@ public class LoginTest {
 
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         Assert.assertEquals(heading.getText(), "Hi, Genowef Barbarzyńca");
+        driver.quit();
 
     }
 }
