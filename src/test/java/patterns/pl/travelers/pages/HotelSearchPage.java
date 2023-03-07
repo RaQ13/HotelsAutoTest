@@ -1,8 +1,10 @@
 package patterns.pl.travelers.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +37,14 @@ public class HotelSearchPage {
 
     @FindBy(xpath = "//button[text()=' Search']")
     private WebElement searchButton;
+
+    /** Page factory inicjujący pola z @FindBy
+     * PageFactory (driver, strona)
+     * */
+
+    public HotelSearchPage(WebDriver driver) {
+        PageFactory.initElements(driver,  this);
+    }
 
     public void setCityName(String cityName) {
         searchHotelSpan.click();
