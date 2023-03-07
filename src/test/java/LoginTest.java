@@ -7,14 +7,14 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginTest {
+public class LoginTest extends BaseTest{
 
     @Test
-    public void login() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void loginTest() {
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        driver.manage().window().maximize();
+//        driver.get("http://www.kurs-selenium.pl/demo/");
 
         driver.findElements(By.id("li_myaccount"))
                 .stream()
@@ -36,7 +36,7 @@ public class LoginTest {
 
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         Assert.assertEquals(heading.getText(), "Hi, Genowef Barbarzyńca");
-        driver.quit();
+//        driver.quit();
 
     }
 }

@@ -1,24 +1,20 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
-public class ZadanieSearch {
+public class ZadanieSearchTest extends BaseTest{
 
     @Test
-    public void searchHotels() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void searchHotelsTest() {
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        driver.manage().window().maximize();
+//        driver.get("http://www.kurs-selenium.pl/demo/");
 
         //pobiera aktualną date w formacie dd/MM/yyyy
         String pattern = "dd/MM/yyyy";
@@ -44,6 +40,6 @@ public class ZadanieSearch {
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
         WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
         Assert.assertEquals(heading.getText(), "No Results Found");
-        driver.quit();
+//        driver.quit();
     }
 }

@@ -1,9 +1,10 @@
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
@@ -13,17 +14,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class HotelSearch {
-
+public class HotelSearchTest extends BaseTest{
     @Test
-    public void searchHotel() {
+    public void searchHotelTest() {
         /** Część pierwsza wyszukiwanie wyniuku*/
 
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //półśrodek dla czekania na element
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //półśrodek dla czekania na element
 //        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+//        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElement(By.xpath("//span[text()='Search by Hotel or City Name']")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
 //        Thread.sleep(3000); //krok 1, okazuje sie że wystarczyło poczekać na element
@@ -72,15 +71,15 @@ public class HotelSearch {
         Assert.assertEquals(hotelNames.get(1),"Oasis Beach Tower");
         Assert.assertEquals(hotelNames.get(2), "Rose Rayhaan Rotana");
         Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
-        driver.quit();
+//        driver.quit();
     }
 
     @Test
-    public void searchHotels() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void searchHotelsTest() {
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        driver.manage().window().maximize();
+//        driver.get("http://www.kurs-selenium.pl/demo/");
 
         //pobiera aktualną date w formacie dd/MM/yyyy
         String pattern = "dd/MM/yyyy";
@@ -106,6 +105,6 @@ public class HotelSearch {
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
         WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
         Assert.assertEquals(heading.getText(), "No Results Found");
-        driver.quit();
+//        driver.quit();
     }
 }

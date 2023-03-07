@@ -1,23 +1,29 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class ZadanieEmptyForm {
-
-    WebDriver driver = new ChromeDriver();
+public class ZadanieEmptyFormTest extends BaseTest{
     @Test
-    public void tryEmptyForm() {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/register");
+    public void tryEmptyFormTest() {
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        driver.manage().window().maximize();
+//        driver.get("http://www.kurs-selenium.pl/demo/");
+
+        driver.findElements(By.id("li_myaccount"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+
+        driver.findElements(By.xpath("//a[text()='  Sign Up']"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
 
         WebElement submit = driver.findElement(By.xpath("//button[@type='submit' and text()=' Sign Up']"));
         WebElement fname = driver.findElement(By.name("firstname"));
@@ -70,7 +76,20 @@ public class ZadanieEmptyForm {
         softAssert.assertAll();
     }
     @Test
-    public void tryInvalidEmail() throws InterruptedException {
+    public void tryInvalidEmailTest() throws InterruptedException {
+
+        driver.findElements(By.id("li_myaccount"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+
+        driver.findElements(By.xpath("//a[text()='  Sign Up']"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+
         WebElement submit = driver.findElement(By.xpath("//button[@type='submit' and text()=' Sign Up']"));
         WebElement fname = driver.findElement(By.name("firstname"));
         WebElement lname = driver.findElement(By.name("lastname"));
@@ -102,6 +121,6 @@ public class ZadanieEmptyForm {
         softAssert.assertTrue(errors2.contains("The Email field must contain a valid email address."));
         softAssert.assertTrue(errors2.contains("The Password field must be at least 6 characters in length."));
         softAssert.assertAll();
-        driver.quit();
+//        driver.quit();
     }
 }
