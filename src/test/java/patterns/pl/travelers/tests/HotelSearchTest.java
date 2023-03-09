@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import patterns.pl.travelers.pages.HotelSearchPage;
+import patterns.pl.travelers.pages.ResultsPage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,13 +25,9 @@ public class HotelSearchTest extends BaseTest {
 
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
 
-        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class,'list_title')]//b"))
-                .stream()
-                .map(el -> el.getAttribute("textContent"))
-                .collect(Collectors.toList());
-        System.out.println(hotelNames.size());
+        ResultsPage resultsPage = new ResultsPage(driver);
 
-        hotelNames.forEach(System.out::println);
+        List<String> hotelNames = resultsPage.getHotelNames();
 
         Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
         Assert.assertEquals(hotelNames.get(1),"Oasis Beach Tower");
