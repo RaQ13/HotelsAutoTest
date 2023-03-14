@@ -20,7 +20,7 @@ public class HotelSearchTest extends BaseTest {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver); //przekazany driver do PageFactory
         hotelSearchPage.setCityName("Dubai");
         hotelSearchPage.setDates("20/10/2023", "26,10,2023");
-        hotelSearchPage.setTravellers();
+        hotelSearchPage.setTravellers(1, 1);
         hotelSearchPage.performSearch();
 
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
@@ -36,9 +36,10 @@ public class HotelSearchTest extends BaseTest {
     }
 
     @Test
-    public void searchHotelsTest() {
+    public void searchHotelsTest2() {
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        ResultsPage resultsPage = new ResultsPage(driver);
 
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -52,9 +53,10 @@ public class HotelSearchTest extends BaseTest {
         String dateFlightBack = simpleDateFormat.format(dateBack);
 
         hotelSearchPage.setDates(dateFlightOut, dateFlightBack);
+        hotelSearchPage.setTravellers(0, 1);
         hotelSearchPage.performSearch();
 
-        WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
-        Assert.assertEquals(heading.getText(), "No Results Found");
+//        WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
+        Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
     }
 }
