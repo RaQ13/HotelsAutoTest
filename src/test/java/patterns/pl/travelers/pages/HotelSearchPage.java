@@ -6,9 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class HotelSearchPage {
 
     @FindBy(xpath = "//span[text()='Search by Hotel or City Name']")
@@ -17,8 +14,8 @@ public class HotelSearchPage {
     @FindBy(xpath = "//div[@id='select2-drop']//input")
     private WebElement searchHotelInput;
 
-    @FindBy(xpath = "//span[@class='select2-match' and text()='Dubai']")
-    private WebElement hotelMatch;
+//    @FindBy(xpath = "//span[@class='select2-match' and text()='Dubai']")
+//    private WebElement hotelMatch;
 
     @FindBy(name = "checkin")
     private WebElement checkinInput;
@@ -38,18 +35,24 @@ public class HotelSearchPage {
     @FindBy(xpath = "//button[text()=' Search']")
     private WebElement searchButton;
 
+    private WebDriver driver; //2. pole webdriver
+
     /** Page factory inicjujący pola z @FindBy
      * PageFactory (driver, strona)
      * */
 
     public HotelSearchPage(WebDriver driver) {
         PageFactory.initElements(driver,  this);
+        this.driver = driver; //3. przypisanie do pola przekazanego drivera
     }
 
     public void setCityName(String cityName) {
+        //1. dla wyszukania match z podanego miasta
+        String xpathMatch = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
-        hotelMatch.click();
+        driver.findElement(By.xpath(xpathMatch)).click();
+//        hotelMatch.click();
     }
 
     public void setDates(String checkin, String checkout) {
