@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import patterns.pl.travelers.pages.LogedUserPage;
 import patterns.pl.travelers.pages.SignUpPage;
 
 public class SignUpTest extends BaseTest{
@@ -15,13 +16,13 @@ public class SignUpTest extends BaseTest{
         String email = "ptrknorder" + randomnumber + "@gmail.com";
 
         SignUpPage signUpPage = new SignUpPage(driver);
+        LogedUserPage logedUserPage = new LogedUserPage(driver);
         signUpPage.myAccountClick();
         signUpPage.signUpButtonClick();
         signUpPage.fillForm("Genowef", lastName, "666666666", email, "Test123", "Test123");
         signUpPage.signUpButtonClick();
 
-        WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
-        Assert.assertTrue(heading.getText().contains(lastName));
-        Assert.assertEquals(heading.getText(), "Hi, Genowef Barbarzyńca");
+        Assert.assertTrue(logedUserPage.getHeadingText().contains(lastName));
+        Assert.assertEquals(logedUserPage.getHeadingText(), "Hi, Genowef " + lastName);
     }
 }
