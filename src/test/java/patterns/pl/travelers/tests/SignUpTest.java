@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import patterns.pl.travelers.model.User;
 import patterns.pl.travelers.pages.LogedUserPage;
 import patterns.pl.travelers.pages.SignUpPage;
 
@@ -25,6 +26,32 @@ public class SignUpTest extends BaseTest {
         signUpPage.myAccountClick();
         signUpPage.signUpButtonClick();
         signUpPage.fillForm("Genowef", lastName, "666666666", email, "Test123", "Test123");
+        signUpPage.signUpButtonClick();
+
+        Assert.assertTrue(logedUserPage.getHeadingText().contains(lastName));
+        Assert.assertEquals(logedUserPage.getHeadingText(), "Hi, Genowef " + lastName);
+    }
+
+    /** Korzysta z obiektu klasy User */
+    @Test
+    public void signUpTest2() {
+        String lastName = "Barbarzyńca";
+        int randomnumber = (int) (Math.random() * 10000);
+        String email = "ptrknorder" + randomnumber + "@gmail.com";
+
+        SignUpPage signUpPage = new SignUpPage(driver);
+        LogedUserPage logedUserPage = new LogedUserPage(driver);
+        User user = new User(); //obiekt klasy user
+
+        user.setFirstName("Genowef");
+        user.setLastName(lastName);
+        user.setPhone("666666666");
+        user.setEmail(email);
+        user.setPassword("Test123");
+
+        signUpPage.myAccountClick();
+        signUpPage.signUpButtonClick();
+        signUpPage.fillForm(user); //przekazywany obiekt
         signUpPage.signUpButtonClick();
 
         Assert.assertTrue(logedUserPage.getHeadingText().contains(lastName));

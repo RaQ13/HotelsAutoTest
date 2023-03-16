@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import patterns.pl.travelers.model.User;
 import patterns.pl.travelers.tests.BaseTest;
 
 import java.util.List;
@@ -66,6 +67,16 @@ public class SignUpPage extends BaseTest {
         emailInput.sendKeys(email);
         passwordInput.sendKeys(pass);
         confirmPasswordInput.sendKeys(confPass);
+        submitButton.click();
+    }
+
+    public void fillForm(User user) { //przeciążona metoda fillForm obslugująca obiekt
+        fnameInput.sendKeys(user.getFirstName());
+        lnameInput.sendKeys(user.getLastName());
+        phoneInput.sendKeys(user.getPhone());
+        emailInput.sendKeys(user.getEmail());
+        passwordInput.sendKeys(user.getPassword());
+        confirmPasswordInput.sendKeys(user.getPassword());
         submitButton.click();
     }
 
