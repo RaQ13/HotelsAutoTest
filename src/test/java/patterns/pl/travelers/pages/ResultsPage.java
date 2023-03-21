@@ -26,6 +26,10 @@ public class ResultsPage {
                 .collect(Collectors.toList());
     }
 
+    public WebElement resultHeading() {
+        return this.heading;
+    }
+
     public String getHeadingText() {
         return heading.getText();
     }

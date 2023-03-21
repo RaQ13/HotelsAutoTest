@@ -22,11 +22,10 @@ public class SignUpTest extends BaseTest {
         String email = "ptrknorder" + randomnumber + "@gmail.com";
 
         SignUpPage signUpPage = new SignUpPage(driver);
-        LogedUserPage logedUserPage = new LogedUserPage(driver);
-        signUpPage.myAccountClick();
-        signUpPage.signUpButtonClick();
-        signUpPage.fillForm("Genowef", lastName, "666666666", email, "Test123", "Test123");
-        signUpPage.signUpButtonClick();
+        LogedUserPage logedUserPage = signUpPage.myAccountClick()
+        .signUpButtonOpenClick()
+        .fillForm("Genowef", lastName, "666666666", email, "Test123", "Test123")
+        .signUpButtonSumbitClick();
 
         Assert.assertTrue(logedUserPage.getHeadingText().contains(lastName));
         Assert.assertEquals(logedUserPage.getHeadingText(), "Hi, Genowef " + lastName);
@@ -43,16 +42,16 @@ public class SignUpTest extends BaseTest {
         LogedUserPage logedUserPage = new LogedUserPage(driver);
         User user = new User(); //obiekt klasy user
 
-        user.setFirstName("Genowef");
-        user.setLastName(lastName);
-        user.setPhone("666666666");
-        user.setEmail(email);
-        user.setPassword("Test123");
+        user.setFirstName("Genowef")
+        .setLastName(lastName)
+        .setPhone("666666666")
+        .setEmail(email)
+        .setPassword("Test123");
 
-        signUpPage.myAccountClick();
-        signUpPage.signUpButtonClick();
-        signUpPage.fillForm(user); //przekazywany obiekt
-        signUpPage.signUpButtonClick();
+        signUpPage.myAccountClick()
+        .signUpButtonOpenClick()
+        .fillForm(user) //przekazywany obiekt
+        .signUpButtonSumbitClick();
 
         Assert.assertTrue(logedUserPage.getHeadingText().contains(lastName));
         Assert.assertEquals(logedUserPage.getHeadingText(), "Hi, Genowef " + lastName);
@@ -61,9 +60,9 @@ public class SignUpTest extends BaseTest {
     @Test
     public void tryEmptyFormTest() {
         SignUpPage signUpPage = new SignUpPage(driver);
-        signUpPage.myAccountClick();
-        signUpPage.signUpButtonClick();
-        signUpPage.submitButtonClick();
+        signUpPage.myAccountClick()
+        .signUpButtonOpenClick()
+        .submitButtonClick();
 
         List<String> onSubmitErros = signUpPage.getErrors();
         SoftAssert softAssert = new SoftAssert();
@@ -80,10 +79,10 @@ public class SignUpTest extends BaseTest {
 
         SoftAssert softAssert = new SoftAssert();
         SignUpPage signUpPage = new SignUpPage(driver);
-        signUpPage.myAccountClick();
-        signUpPage.signUpButtonClick();
-        signUpPage.fillForm("Gniewomir", "Wsiok", "123659874", "pastaemail.com", "test", "test");
-        signUpPage.submitButtonClick();
+        signUpPage.myAccountClick()
+        .signUpButtonOpenClick()
+        .fillForm("Gniewomir", "Wsiok", "123659874", "pastaemail.com", "test", "test")
+        .submitButtonClick();
 
         List<String> onSubmitErrors = signUpPage.getErrors();
         softAssert.assertTrue(onSubmitErrors.contains("The Email field must contain a valid email address."));

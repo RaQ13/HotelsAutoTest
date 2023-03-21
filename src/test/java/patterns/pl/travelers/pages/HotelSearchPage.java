@@ -46,33 +46,47 @@ public class HotelSearchPage {
         this.driver = driver; //3. przypisanie do pola przekazanego drivera
     }
 
-    public void setCityName(String cityName) {
+
+    /** Podejście fluent:
+     * zmiana zwracanego typu na daną Klase:
+     * zwracanie tej klasy
+     *
+     * !! Jeżeli jesteśmy na tej samej stronie możemy zwórcić dana klase!!*/
+
+//    public void setCityName(String cityName) {
+    public HotelSearchPage setCityName(String cityName) {
         //1. dla wyszukania match z podanego miasta
         String xpathMatch = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         driver.findElement(By.xpath(xpathMatch)).click();
-//        hotelMatch.click();
+        return this;
     }
 
-    public void setDates(String checkin, String checkout) {
+    public HotelSearchPage setDates(String checkin, String checkout) {
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
+        return this;
     }
 
-    public void setTravellers(int adultsToAdd, int childToAdd) {
+    public HotelSearchPage setTravellers(int adultsToAdd, int childToAdd) {
         travellersInput.click();
         addTraveller(adultPlusButton, adultsToAdd);
         addTraveller(childPlusButton, childToAdd);
+        return this;
     }
 
-    public void addTraveller(WebElement travellerBtn, int numberOfTravellers) {
+    public HotelSearchPage addTraveller(WebElement travellerBtn, int numberOfTravellers) {
         for (int i = 0; i < numberOfTravellers; i++) {
             travellerBtn.click();
         }
+        return this;
     }
 
-    public void performSearch() {
+    //Ta metoda przenosi na inną stronę, dlatego musi zwracać NOWY obiekt danej klasy, wraz z
+    // przekazanym driverem do obiektu
+    public ResultsPage performSearch() {
         searchButton.click();
+        return new ResultsPage(driver);
     }
 }

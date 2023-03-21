@@ -43,24 +43,35 @@ public class SignUpPage extends BaseTest {
     @FindBy(xpath = "//div[@class='alert alert-danger']//p")
     private List<WebElement> onSubmitErrors;
 
+    private WebDriver driver;
 
-    public void myAccountClick() {
+
+    public SignUpPage myAccountClick() {
         myAccountButton.stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst().ifPresent(WebElement::click);
+        return this;
     }
 
-    public void signUpButtonClick() {
+    public SignUpPage signUpButtonOpenClick() {
         signUpButton.stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst().ifPresent(WebElement::click);
+        return this;
+    }
+
+    public LogedUserPage signUpButtonSumbitClick() {
+        signUpButton.stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst().ifPresent(WebElement::click);
+        return new LogedUserPage(driver);
     }
 
     public void submitButtonClick() {
         submitButton.click();
     }
 
-    public void fillForm(String fname, String lname, String phone, String email, String pass, String confPass) {
+    public SignUpPage fillForm(String fname, String lname, String phone, String email, String pass, String confPass) {
         fnameInput.sendKeys(fname);
         lnameInput.sendKeys(lname);
         phoneInput.sendKeys(phone);
@@ -68,9 +79,10 @@ public class SignUpPage extends BaseTest {
         passwordInput.sendKeys(pass);
         confirmPasswordInput.sendKeys(confPass);
         submitButton.click();
+        return this;
     }
 
-    public void fillForm(User user) { //przeciążona metoda fillForm obslugująca obiekt
+    public SignUpPage fillForm(User user) { //przeciążona metoda fillForm obslugująca obiekt
         fnameInput.sendKeys(user.getFirstName());
         lnameInput.sendKeys(user.getLastName());
         phoneInput.sendKeys(user.getPhone());
@@ -78,6 +90,7 @@ public class SignUpPage extends BaseTest {
         passwordInput.sendKeys(user.getPassword());
         confirmPasswordInput.sendKeys(user.getPassword());
         submitButton.click();
+        return this;
     }
 
     public List<String> getErrors() {
@@ -85,6 +98,6 @@ public class SignUpPage extends BaseTest {
     }
 
     public SignUpPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, this); this.driver = driver;
     }
 }
