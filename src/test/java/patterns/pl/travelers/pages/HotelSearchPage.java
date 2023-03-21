@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import patterns.pl.travelers.utils.SeleniumHelper;
 
 public class HotelSearchPage {
 
@@ -63,14 +64,15 @@ public class HotelSearchPage {
 //    public void setCityName(String cityName) {
     public HotelSearchPage setCityName(String cityName) {
         logger.info("Setting city " + cityName); //z użyciem loggera
-//        System.out.printl("Setting city " + cityName);
+//        logger.info("Setting city " + cityName);
         //1. dla wyszukania match z podanego miasta
         String xpathMatch = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
+        SeleniumHelper.waitForElementToExist(driver, By.xpath(xpathMatch));
         driver.findElement(By.xpath(xpathMatch)).click();
         logger.info("Setting city " + cityName + " done");
-//        System.out.printl("Setting city " + cityName + " done");
+//        logger.info("Setting city " + cityName + " done");
         return this;
     }
 
@@ -90,14 +92,15 @@ public class HotelSearchPage {
         logger.info("Setting adults " + adultsToAdd);
         addTraveller(adultPlusButton, adultsToAdd);
         logger.info("Setting adults " + adultsToAdd + " done");
-        logger.info("Setting adults " + childToAdd);
+        logger.info("Setting children " + childToAdd);
         addTraveller(childPlusButton, childToAdd);
-        logger.info("Setting adults " + childToAdd + " done");
+        logger.info("Setting children " + childToAdd + " done");
         return this;
     }
 
     public HotelSearchPage addTraveller(WebElement travellerBtn, int numberOfTravellers) {
         for (int i = 0; i < numberOfTravellers; i++) {
+            SeleniumHelper.waitForElementToBeVisible(driver, travellerBtn);
             travellerBtn.click();
         }
         return this;

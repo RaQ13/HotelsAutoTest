@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import patterns.pl.travelers.model.User;
 import patterns.pl.travelers.tests.BaseTest;
+import patterns.pl.travelers.utils.SeleniumHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,7 +95,8 @@ public class SignUpPage extends BaseTest {
     }
 
     public List<String> getErrors() {
-       return onSubmitErrors.stream().map(WebElement::getText).collect(Collectors.toList());
+        SeleniumHelper.waitForNotEmptyList(driver, By.xpath("//div[@class='alert alert-danger']//p"));
+        return onSubmitErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public SignUpPage(WebDriver driver) {
