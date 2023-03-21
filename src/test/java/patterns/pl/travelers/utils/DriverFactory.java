@@ -5,10 +5,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.IOException;
+
 /** Klasa definiujaca driver */
 public class DriverFactory {
 
-    public static WebDriver getDriver(String name) {
+    public static WebDriver getDriver() throws IOException {
+        String name = PropertiesLoader.loadProperty("browser.name");
+
         if (name.equals("firefox")) {
             return new FirefoxDriver();
         } else {
