@@ -55,24 +55,35 @@ public class HotelSearchPage {
 
 //    public void setCityName(String cityName) {
     public HotelSearchPage setCityName(String cityName) {
+        System.out.println("Setting city " + cityName);
         //1. dla wyszukania match z podanego miasta
         String xpathMatch = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         driver.findElement(By.xpath(xpathMatch)).click();
+        System.out.println("Setting city " + cityName + " done");
         return this;
     }
 
     public HotelSearchPage setDates(String checkin, String checkout) {
+        System.out.println("Setting dates");
+        System.out.println("Setting checkin date " + checkin);
         checkinInput.sendKeys(checkin);
+        System.out.println("Setting checkin date " + checkin + " done");
+        System.out.println("Setting checkin date " + checkout);
         checkoutInput.sendKeys(checkout);
+        System.out.println("Setting checkin date " + checkout + " done");
         return this;
     }
 
     public HotelSearchPage setTravellers(int adultsToAdd, int childToAdd) {
         travellersInput.click();
+        System.out.println("Setting adults " + adultsToAdd);
         addTraveller(adultPlusButton, adultsToAdd);
+        System.out.println("Setting adults " + adultsToAdd + " done");
+        System.out.println("Setting adults " + childToAdd);
         addTraveller(childPlusButton, childToAdd);
+        System.out.println("Setting adults " + childToAdd + " done");
         return this;
     }
 
@@ -86,7 +97,9 @@ public class HotelSearchPage {
     //Ta metoda przenosi na inną stronę, dlatego musi zwracać NOWY obiekt danej klasy, wraz z
     // przekazanym driverem do obiektu
     public ResultsPage performSearch() {
+        System.out.println("Performing search");
         searchButton.click();
+        System.out.println("Perform search done");
         return new ResultsPage(driver);
     }
 }
