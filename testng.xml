@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/Marcin Najwer/Desktop/Tester/Java/Travels/travels">
+        <classes>
+            <class name="patterns.pl.travelers.tests.HotelSearchTest">
+                <methods>
+                    <include name="searchHotelTest2"/>
+                    <include name="searchHotelTest"/>
+                    <include name="searchHotelsTest2"/>
+                </methods>
+            </class>
+            <class name="patterns.pl.travelers.tests.SignUpTest">
+                <methods>
+                    <include name="signUpTest"/>
+                    <include name="signUpTest2"/>
+                    <include name="tryEmptyFormTest"/>
+                    <include name="tryInvalidEmailTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

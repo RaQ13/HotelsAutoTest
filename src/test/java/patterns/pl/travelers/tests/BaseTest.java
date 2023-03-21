@@ -13,11 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     protected WebDriver driver;
-    protected ChromeOptions options;
-
     @BeforeMethod
     public void setup(){
-        driver = DriverFactory.getDriver("firefox");
+        driver = DriverFactory.getDriver("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");

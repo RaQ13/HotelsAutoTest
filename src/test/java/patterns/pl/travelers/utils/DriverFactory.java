@@ -12,8 +12,9 @@ public class DriverFactory {
         if (name.equals("firefox")) {
             return new FirefoxDriver();
         } else {
+            //org.openqa.selenium.remote.http.ConnectionFailedException: Unable to establish websocket connection to
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
+            options.addArguments("--remote-allow-origins=*"); //dodanie tej opcji rozwiązuje
             return new ChromeDriver(options);
         }
     }
