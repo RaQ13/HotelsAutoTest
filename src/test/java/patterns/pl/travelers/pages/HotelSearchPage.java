@@ -1,5 +1,7 @@
 package patterns.pl.travelers.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,6 +39,11 @@ public class HotelSearchPage {
 
     private WebDriver driver; //2. pole webdriver
 
+    //logger
+    private static final Logger logger = LogManager.getLogger();
+
+
+
     /** Page factory inicjujący pola z @FindBy
      * PageFactory (driver, strona)
      * */
@@ -55,35 +62,37 @@ public class HotelSearchPage {
 
 //    public void setCityName(String cityName) {
     public HotelSearchPage setCityName(String cityName) {
-        System.out.println("Setting city " + cityName);
+        logger.info("Setting city " + cityName); //z użyciem loggera
+//        System.out.printl("Setting city " + cityName);
         //1. dla wyszukania match z podanego miasta
         String xpathMatch = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityName);
         driver.findElement(By.xpath(xpathMatch)).click();
-        System.out.println("Setting city " + cityName + " done");
+        logger.info("Setting city " + cityName + " done");
+//        System.out.printl("Setting city " + cityName + " done");
         return this;
     }
 
     public HotelSearchPage setDates(String checkin, String checkout) {
-        System.out.println("Setting dates");
-        System.out.println("Setting checkin date " + checkin);
+        logger.info("Setting dates");
+        logger.info("Setting checkin date " + checkin);
         checkinInput.sendKeys(checkin);
-        System.out.println("Setting checkin date " + checkin + " done");
-        System.out.println("Setting checkin date " + checkout);
+        logger.info("Setting checkin date " + checkin + " done");
+        logger.info("Setting checkin date " + checkout);
         checkoutInput.sendKeys(checkout);
-        System.out.println("Setting checkin date " + checkout + " done");
+        logger.info("Setting checkin date " + checkout + " done");
         return this;
     }
 
     public HotelSearchPage setTravellers(int adultsToAdd, int childToAdd) {
         travellersInput.click();
-        System.out.println("Setting adults " + adultsToAdd);
+        logger.info("Setting adults " + adultsToAdd);
         addTraveller(adultPlusButton, adultsToAdd);
-        System.out.println("Setting adults " + adultsToAdd + " done");
-        System.out.println("Setting adults " + childToAdd);
+        logger.info("Setting adults " + adultsToAdd + " done");
+        logger.info("Setting adults " + childToAdd);
         addTraveller(childPlusButton, childToAdd);
-        System.out.println("Setting adults " + childToAdd + " done");
+        logger.info("Setting adults " + childToAdd + " done");
         return this;
     }
 
@@ -97,9 +106,9 @@ public class HotelSearchPage {
     //Ta metoda przenosi na inną stronę, dlatego musi zwracać NOWY obiekt danej klasy, wraz z
     // przekazanym driverem do obiektu
     public ResultsPage performSearch() {
-        System.out.println("Performing search");
+        logger.info("Performing search");
         searchButton.click();
-        System.out.println("Perform search done");
+        logger.info("Perform search done");
         return new ResultsPage(driver);
     }
 }
