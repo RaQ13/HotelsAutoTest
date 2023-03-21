@@ -2,11 +2,25 @@
 <Configuration xmlns="http://logging.apache.org/log4j/2.0/config" status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
+            <!-- Pattern - wypisywane w logu
+             można zamieniać kolejność w pattern
+             13:10:03.869 [main] INFO  - Info
+
+             13:10:03.869 - %d{HH:mm:ss.SSS} - czas z pattern
+             [main]       - [%t] - metoda wyrzucająca loga
+             INFO         - %-5level - poziom
+             - Info       - %msg%n - wiadomość
+             -->
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="info"> <!-- Wypisywane elementy z poziomu info -->
+        <!-- level= info, trace, debug, fatal, error, warn
+        info - info, error, warn, fatal
+        warn - error, warn, fatal
+        trace - wszystkie
+        -->
+        <Root level="info"> <!-- Wypisywane elementy z poziomu info, sprawdz działanie w LoggerTest -->
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
