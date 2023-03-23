@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import patterns.pl.travelers.pages.HotelSearchPage;
 import patterns.pl.travelers.pages.ResultsPage;
 import patterns.pl.travelers.utils.ExcelReader;
+import patterns.pl.travelers.utils.SeleniumHelper;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -68,13 +69,13 @@ public class HotelSearchTest extends BaseTest {
         ExtentTest test = extentReports.createTest("Search Hotel Test");
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver); //przekazany driver do PageFactory
         hotelSearchPage.setCityName("Dubai");
-        test.log(Status.PASS, "Setting city done");
+        test.log(Status.PASS, "Setting city done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.setDates("20/10/2023", "26,10,2023");
-        test.log(Status.PASS, "Setting dates done");
+        test.log(Status.PASS, "Setting dates done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.setTravellers(1, 1);
-        test.log(Status.PASS, "Setting travellers done");
+        test.log(Status.PASS, "Setting travellers done", SeleniumHelper.getScreenshot(driver));
         hotelSearchPage.performSearch();
-        test.log(Status.PASS, "Performing search done");
+        test.log(Status.PASS, "Performing search done", SeleniumHelper.getScreenshot(driver));
 
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
 
@@ -85,15 +86,17 @@ public class HotelSearchTest extends BaseTest {
         Assert.assertEquals(hotelNames.get(1),"Oasis Beach Tower");
         Assert.assertEquals(hotelNames.get(2), "Rose Rayhaan Rotana");
         Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
-        test.log(Status.PASS, "Assertions passed");
-        //dodanie screena do raportu
-        test.log(Status.PASS, "Screenshot", MediaEntityBuilder.createScreenCaptureFromPath("src/test/resources/screenshots/screen.png").build());
+        //2. screen za pomocą klasy tworzącej screeny
+        test.log(Status.PASS, "Assertions passed", SeleniumHelper.getScreenshot(driver));
+        //1. dodanie screena do raportu
+//        test.log(Status.PASS, "Screenshot", MediaEntityBuilder.createScreenCaptureFromPath("src/test/resources/screenshots/screen.png").build());
     }
 
     @Test
-    public void searchHotelsTest2() {
+    public void searchHotelsTest2() throws IOException {
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        ExtentTest test = extentReports.createTest("Search Without City Name Test");
 //        ResultsPage resultsPage = new ResultsPage(driver);
 
         String pattern = "dd/MM/yyyy";
@@ -110,21 +113,26 @@ public class HotelSearchTest extends BaseTest {
         ResultsPage resultsPage = hotelSearchPage.setDates(dateFlightOut, dateFlightBack)
                 .setTravellers(0, 1)
                 .performSearch();
+        test.log(Status.PASS, "Field filled with data without city name", SeleniumHelper.getScreenshot(driver));
 
 //        WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
         Assert.assertTrue(resultsPage.resultHeading().isDisplayed());
         Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
+        test.log(Status.PASS, "Assertions Passed", SeleniumHelper.getScreenshot(driver));
     }
 
     @Test(dataProvider = "excelData")
-    public void searchHotelTest2WithDataProvider(String city, String hotel) {
+    public void searchHotelTest2WithDataProvider(String city, String hotel) throws IOException {
+        ExtentTest test = extentReports.createTest("Search Hotel Names for " + city);
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver); //przekazany driver do PageFactory
         List<String> hotelNames = hotelSearchPage.setCityName(city)
                 .setDates("20/10/2023", "26,10,2023")
                 .setTravellers(1,1)
                 .performSearch().getHotelNames();
+        test.log(Status.PASS, "Fields filler", SeleniumHelper.getScreenshot(driver));
 
         Assert.assertEquals(hotel, hotelNames.get(0));
+        test.log(Status.PASS, "Assertions done", SeleniumHelper.getScreenshot(driver));
     }
 
     @DataProvider
