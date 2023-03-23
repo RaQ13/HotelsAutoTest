@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ExcelReader {
 
-    public static void readExcel(String fileName) throws IOException {
+    public static Object[][] readExcel(String fileName) throws IOException {
 
         File file = new File("src/test/resources/" + fileName);
         FileInputStream inputStream = new FileInputStream(file);
@@ -35,6 +35,9 @@ public class ExcelReader {
 
         //ilość wierszy
         int rowCount = sheet.getLastRowNum();
+        //ilość kolumn
+        int columnCount = sheet.getRow(0).getLastCellNum();
+        Object[][] data = new Object[rowCount][columnCount];
 
         //od 1, pomijany pierwszy wiersz, który jest nagłówkami
         for (int i = 1; i <= rowCount; i++) {
@@ -45,7 +48,12 @@ public class ExcelReader {
             System.out.println(row.getCell(1).getStringCellValue());
             row.getCell(0).getStringCellValue();
             row.getCell(1).getStringCellValue();
+            //kolumna w rzędzie
+            for(int j = 0; j < columnCount; j++) {
+                data[i-1][j] = row.getCell(j).getStringCellValue();
+            }
         }
+        return data;
     }
 
     public static void main(String[] args) throws IOException {

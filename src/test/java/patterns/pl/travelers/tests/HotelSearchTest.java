@@ -2,10 +2,13 @@ package patterns.pl.travelers.tests;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import patterns.pl.travelers.pages.HotelSearchPage;
 import patterns.pl.travelers.pages.ResultsPage;
+import patterns.pl.travelers.utils.ExcelReader;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -101,5 +104,23 @@ public class HotelSearchTest extends BaseTest {
 //        WebElement heading = driver.findElement(By.xpath("//h2[@class='text-center' and text()='No Results Found']"));
         Assert.assertTrue(resultsPage.resultHeading().isDisplayed());
         Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
+    }
+
+    @Test(dataProvider = "excelData")
+    public void searchHotelTest2WithDataProvider(String city, String hotel) {
+
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver); //przekazany driver do PageFactory
+
+        List<String> hotelNames = hotelSearchPage.setCityName(city)
+                .setDates("20/10/2023", "26,10,2023")
+                .setTravellers(1,1)
+                .performSearch().getHotelNames();
+
+        Assert.assertEquals(hotel, hotelNames.get(0));
+    }
+
+    @DataProvider
+    public Object[][] excelData() throws IOException {
+        return ExcelReader.readExcel("testData.xlsx");
     }
 }
